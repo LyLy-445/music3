@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>同時再生</title>
+</head>
+<body>
+
+<h2>同時再生</h2>
+
+<input type="file" id="file1" accept="audio/mp3"><br>
+<audio id="audio1" controls></audio><br><br>
+
+<input type="file" id="file2" accept="audio/mp3"><br>
+<audio id="audio2" controls></audio><br><br>
+
+<input type="file" id="file3" accept="audio/mp3"><br>
+<audio id="audio3" controls></audio><br><br>
+
+<button onclick="playAll()">全部再生</button>
+<button onclick="pauseAll()">全部停止</button>
+
+<h3>全体音量</h3>
+<input type="range" id="masterVolume" min="0" max="1" step="0.01" value="1">
+<span id="volLabel">100%</span>
+
+<script>
+function loadAudio(inputId, audioId) {
+  const input = document.getElementById(inputId);
+  const audio = document.getElementById(audioId);
+
+  input.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+      audio.src = URL.createObjectURL(file);
+    }
+  });
+}
+
+loadAudio('file1', 'audio1');
+loadAudio('file2', 'audio2');
+loadAudio('file3', 'audio3');
+
+function playAll() {
+  document.querySelectorAll('audio').forEach(a => a.play());
+}
+
+function pauseAll() {
+  document.querySelectorAll('audio').forEach(a => a.pause());
+}
+
+const master = document.getElementById('masterVolume');
+const label = document.getElementById('volLabel');
+
+master.addEventListener('input', function() {
+  const vol = parseFloat(this.value);
+
+  document.querySelectorAll('audio').forEach(a => {
+    a.volume = vol;
+  });
+
+  label.textContent = Math.round(vol * 100) + '%';
+});
+
+</script>
+
+</body>
+</html>

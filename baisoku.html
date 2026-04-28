@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>倍速プレイヤー</title>
+</head>
+<body>
+
+<h2>倍速再生</h2>
+
+<input type="file" id="fileInput" accept="audio/*"><br><br>
+
+<audio id="audio" controls></audio><br><br>
+
+<button onclick="playNormal()">通常</button>
+<button onclick="playFast()">3倍速</button>
+<button onclick="playFast5()">5倍速</button>
+
+<script>
+const audio = document.getElementById('audio');
+
+document.getElementById('fileInput').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    audio.src = URL.createObjectURL(file);
+  }
+});
+
+function playNormal() {
+  audio.playbackRate = 1.0;
+  audio.play();
+}
+
+function playFast() {
+  audio.playbackRate = 3.0;
+  audio.play();
+}
+
+function playFast5() {
+  audio.playbackRate = 5.0;
+  audio.play();
+}
+</script>
+
+</body>
+</html>
